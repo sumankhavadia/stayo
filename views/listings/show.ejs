@@ -1,0 +1,14 @@
+<% layout('layouts/boilerplate') %>
+
+<h1 class="h3 mb-3">Listing detail</h1>
+<ul class="list-group mb-3">
+  <li class="list-group-item"><%= listing.title %></li>
+  <li class="list-group-item"><%= listing.description %></li>
+  <li class="list-group-item">₹ <%= listing.price.toLocaleString('en-IN') %></li>
+  <li class="list-group-item"><%= listing.location %></li>
+  <li class="list-group-item"><%= listing.country %></li>
+</ul>
+<a class="btn btn-outline-primary me-2" href="/listings/<%= listing._id %>/edit">Edit</a>
+<form class="d-inline" method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+  <button class="btn btn-outline-danger" type="submit">Delete</button>
+</form>

@@ -1,0 +1,80 @@
+.navbar{
+  height: 5rem;
+  background-color: white;
+}
+.navbar-brand{
+  color: #1E2A44;
+  font-size: 2rem;
+}
+.nav-link{
+  color: #222222 !important;
+}
+
+footer {
+  background-color: #1E2A44; /* Midnight Blue */
+  padding: 1.5rem 0;
+  margin-top: 3rem;
+}
+
+.f-info {
+  max-width: 1200px;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 1.5rem;
+  color: #E5E7EB;
+  font-size: 0.9rem;
+}
+
+/* Social Icons */
+.f-info-socials {
+  display: flex;
+  gap: 1rem;
+}
+
+.f-info-socials i {
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+  color: #E5E7EB;
+}
+
+.f-info-socials i:hover {
+  color: #2EC4B6; /* Teal */
+  transform: translateY(-2px);
+}
+
+/* Copyright */
+.f-info div:nth-child(2) {
+  font-weight: 500;
+}
+
+/* Footer Links */
+.f-info-links {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.f-info-links a {
+  color: #E5E7EB;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.f-info-links a:hover {
+  color: #2EC4B6;
+}
+
+
+
+@media (max-width: 768px) {
+  .f-info {
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: center;
+  }
+}

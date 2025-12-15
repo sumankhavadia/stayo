@@ -1,0 +1,12 @@
+<% layout('layouts/boilerplate') %>
+
+<form action="/listings" method="POST" class="vstack gap-3">
+  <input class="form-control" type="text" name="listing[title]" placeholder="Title" required>
+  <textarea class="form-control" name="listing[description]" placeholder="Description"></textarea>
+  <input class="form-control" type="number" name="listing[price]" placeholder="Price">
+  <input class="form-control" type="text" name="listing[location]" placeholder="Location" required>
+  <input class="form-control" type="text" name="listing[country]" placeholder="Country">
+  <input class="form-control" type="text" name="listing[images][]" placeholder="Image URL">
+  <button class="btn btn-primary" type="submit">Add Listing</button>
+</form>
+
