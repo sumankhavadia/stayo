@@ -1,12 +1,132 @@
 <% layout('layouts/boilerplate') %>
 
-<form action="/listings" method="POST" class="vstack gap-3">
-  <input class="form-control" type="text" name="listing[title]" placeholder="Title" required>
-  <textarea class="form-control" name="listing[description]" placeholder="Description"></textarea>
-  <input class="form-control" type="number" name="listing[price]" placeholder="Price">
-  <input class="form-control" type="text" name="listing[location]" placeholder="Location" required>
-  <input class="form-control" type="text" name="listing[country]" placeholder="Country">
-  <input class="form-control" type="text" name="listing[images][]" placeholder="Image URL">
-  <button class="btn btn-primary" type="submit">Add Listing</button>
-</form>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
 
+      <div class="stayo-form-card">
+        <h3 class="form-title">Add New Listing</h3>
+
+                <form 
+          action="/listings" 
+          method="POST"  
+          class="needs-validation" 
+          novalidate
+          enctype="multipart/form-data"
+        >
+
+          <!-- Title -->
+          <div class="mb-3">
+            <input 
+              class="form-control" 
+              type="text" 
+              name="listing[title]" 
+              placeholder="Title" 
+              required
+            >
+            <div class="invalid-feedback">
+              Please enter a listing title.
+            </div>
+            <div class="valid-feedback">
+              Looks good!
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <textarea 
+              class="form-control" 
+              name="listing[description]" 
+              placeholder="Description"
+              rows="4"
+              required
+            ></textarea>
+            <div class="invalid-feedback">
+              Please add a short description.
+            </div>
+            <div class="valid-feedback">
+              Description looks good.
+            </div>
+          </div>
+
+          <!-- Price & Location -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <input 
+                class="form-control" 
+                type="number" 
+                name="listing[price]" 
+                placeholder="Price (per night)" 
+                min="1"
+                required
+              >
+              <div class="invalid-feedback">
+                Enter a valid price.
+              </div>
+              <div class="valid-feedback">
+                Valid price.
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <input 
+                class="form-control" 
+                type="text" 
+                name="listing[location]" 
+                placeholder="Location" 
+                required
+              >
+              <div class="invalid-feedback">
+                Location is required.
+              </div>
+              <div class="valid-feedback">
+                Looks good.
+              </div>
+            </div>
+          </div>
+
+          <!-- Country -->
+          <div class="mb-3">
+            <input 
+              class="form-control" 
+              type="text" 
+              name="listing[country]" 
+              placeholder="Country"
+              required
+            >
+            <div class="invalid-feedback">
+              Please enter a country.
+            </div>
+            <div class="valid-feedback">
+              Looks good.
+            </div>
+          </div>
+
+          <!-- Image URL -->
+          <div class="mb-4">
+            <input 
+              class="form-control" 
+              type="file" 
+              name="listing[image]" 
+              placeholder="Image file"
+            >
+            <div class="invalid-feedback">
+              Please enter a valid image URL.
+            </div>
+            <div class="valid-feedback">
+              Valid URL.
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <button class="btn btn-stayo w-100" type="submit">
+            Add Listing
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>

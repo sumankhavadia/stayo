@@ -1,13 +1,140 @@
 <% layout('layouts/boilerplate') %>
 
-<h3 class="mb-3">Edit your Listing</h3>
-<form class="vstack gap-3" method="POST" action="/listings/<%= listing._id %>?_method=PUT">
-  <input class="form-control" name="listing[title]" value="<%= listing.title %>" type="text" />
-  <textarea class="form-control" name="listing[description]"><%= listing.description %></textarea>
-  <input class="form-control" name="listing[image]" value="<%= listing.image %>" type="text" />
-  <input class="form-control" name="listing[price]" value="<%= listing.price %>" type="number" />
-  <input class="form-control" name="listing[country]" value="<%= listing.country %>" type="text" />
-  <input class="form-control" name="listing[location]" value="<%= listing.location %>" type="text" />
-  <button class="btn btn-primary">Edit</button>
-</form>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
 
+      <div class="stayo-form-card">
+        <h3 class="form-title">Edit Listing</h3>
+
+                <form 
+          action="/listings/<%= listing._id %>?_method=PUT" 
+          method="POST"
+          class="needs-validation"
+          novalidate
+          enctype="multipart/form-data"
+        >
+
+          <!-- Title -->
+          <div class="mb-3">
+            <input 
+              class="form-control" 
+              type="text" 
+              name="listing[title]" 
+              value="<%= listing.title %>" 
+              required
+            >
+            <div class="invalid-feedback">
+              Title cannot be empty.
+            </div>
+            <div class="valid-feedback">
+              Looks good.
+            </div>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-3">
+            <textarea 
+              class="form-control" 
+              name="listing[description]" 
+              rows="4"
+              required
+            ><%= listing.description %></textarea>
+            <div class="invalid-feedback">
+              Please add a description.
+            </div>
+            <div class="valid-feedback">
+              Description looks good.
+            </div>
+          </div>
+
+          <!-- Price & Location -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <input 
+                class="form-control" 
+                type="number" 
+                name="listing[price]" 
+                value="<%= listing.price %>" 
+                min="1"
+                required
+              >
+              <div class="invalid-feedback">
+                Enter a valid price.
+              </div>
+              <div class="valid-feedback">
+                Valid price.
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <input 
+                class="form-control" 
+                type="text" 
+                name="listing[location]" 
+                value="<%= listing.location %>" 
+                required
+              >
+              <div class="invalid-feedback">
+                Location is required.
+              </div>
+              <div class="valid-feedback">
+                Looks good.
+              </div>
+            </div>
+          </div>
+
+          <!-- Country -->
+          <div class="mb-3">
+            <input 
+              class="form-control" 
+              type="text" 
+              name="listing[country]" 
+              value="<%= listing.country %>"
+              required
+            >
+            <div class="invalid-feedback">
+              Country is required.
+            </div>
+            <div class="valid-feedback">
+              Looks good.
+            </div>
+          </div>
+
+          <!-- Existing Image Preview -->
+          <% if (listing.image?.url) { %>
+            <div class="mb-3">
+              <img 
+                src="<%= listing.image.url %>" 
+                class="img-fluid rounded"
+                style="max-height: 200px;"
+              >
+            </div>
+          <% } %>
+
+          <!-- Upload New Image -->
+          <div class="mb-4">
+            <label class="form-label">Upload New Image</label>
+            <input 
+              class="form-control"
+              type="file"
+              name="listing[image]"
+              accept="image/*"
+            >
+          </div>
+
+          
+        
+
+          <!-- Submit -->
+          <button class="btn btn-stayo w-100" type="submit">
+            Update Listing
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>

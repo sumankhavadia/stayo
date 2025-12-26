@@ -1,32 +1,141 @@
 <% layout('layouts/boilerplate') %>
 
+<!-- CATEGORY + TOGGLE BAR -->
+<div class="category-wrapper">
+  <div class="category-bar">
+
+    <!-- LEFT: CATEGORIES -->
+    <div class="category-scroll">
+
+      <button class="category-item active" data-category="all">
+        <i class="fa fa-fire"></i>
+        <span>Trending</span>
+      </button>
+
+      <button class="category-item" data-category="rooms">
+        <i class="fa fa-bed"></i>
+        <span>Rooms</span>
+      </button>
+
+      <button class="category-item" data-category="cities">
+        <i class="fa fa-city"></i>
+        <span>Iconic Cities</span>
+      </button>
+
+      <button class="category-item" data-category="mountains">
+        <i class="fa fa-mountain"></i>
+        <span>Mountains</span>
+      </button>
+
+      <button class="category-item" data-category="castles">
+        <i class="fa fa-chess-rook"></i>
+        <span>Castles</span>
+      </button>
+
+      <button class="category-item" data-category="pools">
+        <i class="fa fa-water"></i>
+        <span>Amazing Pools</span>
+      </button>
+
+      <button class="category-item" data-category="camping">
+        <i class="fa fa-campground"></i>
+        <span>Camping</span>
+      </button>
+
+      <button class="category-item" data-category="farms">
+        <i class="fa fa-tractor"></i>
+        <span>Farms</span>
+      </button>
+
+      <button class="category-item" data-category="arctic">
+        <i class="fa fa-snowflake"></i>
+        <span>Arctic</span>
+      </button>
+
+      <button class="category-item" data-category="domes">
+        <i class="fa fa-igloo"></i>
+        <span>Domes</span>
+      </button>
+
+      <button class="category-item" data-category="boats">
+        <i class="fa fa-ship"></i>
+        <span>Boats</span>
+      </button>
+
+    </div>
+
+   
+        <div class="tax-box">
+          <div class="tax-toggle">
+            <span class="tax-label">Total with GST</span>
+
+            <label class="gst-switch">
+              <input type="checkbox" id="taxToggle">
+              <span class="gst-slider">
+                <span class="gst-percent">+12%</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+
+  </div>
+</div>
+
+<!-- LISTINGS GRID -->
 <div class="container mt-4">
   <div class="row g-4">
 
-    <% for (let listing of alllistings) { %>
-      <div class="col-sm-6 col-md-4 col-lg-3">
+    <% for (let listing of alllistings) { 
+         const photo = listing.image?.url || "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80";
+    %>
+
+      <div 
+        class="col-sm-6 col-md-4 col-lg-3 listing-col"
+        data-category="<%= listing.category || 'all' %>"
+        data-price="<%= listing.price %>"
+      >
         <a href="/listings/<%= listing._id %>" class="listing-link">
-
           <div class="card listing-card h-100">
-
-            <img 
-              src="<%= listing.image || 'https://images.unsplash.com/photo-1505691938895-1758d7feb511' %>" 
-              class="card-img-top"
-              alt="<%= listing.title %>"
-            >
-
+            <img src="<%= photo %>" class="card-img-top">
             <div class="card-body">
               <h6 class="card-title"><%= listing.title %></h6>
-
-              <p class="card-text text-muted mb-0">
+              <p class="card-text text-muted mb-0 price-text">
                 ₹ <%= listing.price %> / night
               </p>
             </div>
-
           </div>
         </a>
       </div>
+
     <% } %>
 
   </div>
 </div>
+
+<!-- FILTER + TOGGLE SCRIPT -->
+<script>
+  // SELECT LISTINGS SAFELY
+  const listings = document.querySelectorAll('.listing-col');
+
+  // GST TOGGLE (ONLY FEATURE ACTIVE)
+  const toggle = document.getElementById('taxToggle');
+
+  if (toggle) {
+    toggle.addEventListener('change', () => {
+      listings.forEach(card => {
+        const basePrice = Number(card.dataset.price);
+        const priceEl = card.querySelector('.price-text');
+
+        if (!priceEl || isNaN(basePrice)) return;
+
+        if (toggle.checked) {
+          const taxed = Math.round(basePrice * 1.12);
+          priceEl.textContent = `₹ ${taxed} total`;
+        } else {
+          priceEl.textContent = `₹ ${basePrice} / night`;
+        }
+      });
+    });
+  }
+</script>

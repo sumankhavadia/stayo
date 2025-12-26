@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
 const initData=require("./data.js");
 const Listing = require("../models/listing.js");
+const OWNER_ID = "69476fa742fb3504ad106a09"; // your user ID
+require("dotenv").config();
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/stayo";
+
+const MONGO_URL = process.env.MONGO_URL;
 
 main()
   .then(() => {
@@ -18,8 +21,15 @@ async function main() {
 
 const initDB = async () => {
   await Listing.deleteMany({});
-  await Listing.insertMany(initData.data);
-  console.log("data was initialized");
+
+  // Inject owner inside all listing objects
+  const updatedData = initData.data.map(item => ({
+    ...item,
+    owner: OWNER_ID
+  }));
+
+  await Listing.insertMany(updatedData);
+  console.log("data initialized with owner field!");
 };
 
 initDB();

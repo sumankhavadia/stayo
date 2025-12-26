@@ -1,22 +1,104 @@
-<nav class="navbar navbar-expand-md bg-body-tertiary border-bottom sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/"><i class="fa fa-bed" aria-hidden="true"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-md navbar-light sticky-top glass-nav">
+  <div class="container-fluid px-4">
+
+    <!-- LEFT: Brand + Explore -->
+    <div class="d-flex align-items-center gap-4">
+
+      <!-- Brand -->
+      <a class="navbar-brand d-flex align-items-center gap-2 mb-0" href="/listings">
+        <i class="fa fa-bed brand-icon"></i>
+        <span class="brand-text">Stayo</span>
+      </a>
+
+      <!-- Explore -->
+      <ul class="navbar-nav mb-0">
+        <li class="nav-item">
+          <a class="nav-link modern-link px-0" href="/listings">
+            Explore
+          </a>
+        </li>
+      </ul>
+
+    </div>
+        <!-- CENTER: SEARCH INPUT -->
+      <form class="navbar-search d-none d-md-flex" action="/listings" method="GET">
+        
+        <div class="search-box">
+
+          <i class="fa fa-search search-icon"></i>
+
+          <input
+            type="text"
+            name="search"
+            class="search-input"
+            placeholder="Search stays, cities, places..."
+            autocomplete="off"
+          />
+
+          <button type="submit" class="search-btn">
+            Search
+          </button>
+
+        </div>
+
+      </form>
+
+    <!-- Toggler -->
+    <button
+      class="navbar-toggler border-0"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNavbar"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+
+    <!-- RIGHT -->
+    <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+      <ul class="navbar-nav align-items-md-center gap-2 mt-3 mt-md-0">
+
+        <!-- Host -->
         <li class="nav-item">
-          <a class="nav-link" aria-current="page" href="/">Home</a>
+          <a href="/listings/new" class="host-link">
+            List your place
+          </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/listings">All listings</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/listings/new">Add new listing </a>
-        </li>
-        
+
+        <% if(!currentUser){ %>
+
+          <li class="nav-item">
+            <a href="/login" class="btn btn-outline-primary rounded-pill px-4 btn-sm">
+              Login
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="/signup" class="btn btn-primary rounded-pill px-4 btn-sm">
+              Sign up
+            </a>
+          </li>
+
+        <% } else { %>
+
+          <li class="nav-item dropdown">
+            <a
+              class="btn btn-light rounded-pill px-3 btn-sm dropdown-toggle d-flex align-items-center gap-2"
+              data-bs-toggle="dropdown"
+            >
+              <i class="fa fa-user"></i>
+              <span class="small"><%= currentUser.username %></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+              <li><a class="dropdown-item" href="/profile">My Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="/logout">Logout</a></li>
+            </ul>
+          </li>
+
+        <% } %>
+
       </ul>
     </div>
+
   </div>
 </nav>
