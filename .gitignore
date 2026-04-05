@@ -1,4 +1,41 @@
-# Node
+# Dependencies
 node_modules/
+**/node_modules/
+
+# Environment files (keep examples)
 .env
-npm-debug.log
+.env.*
+**/.env
+**/.env.*
+!.env.example
+!**/.env.example
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+logs/
+
+# Build and coverage outputs
+dist/
+build/
+coverage/
+**/dist/
+**/build/
+**/coverage/
+
+# Tooling caches
+.cache/
+.eslintcache
+.vite/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+
+# Runtime files
+*.pid
+*.pid.lock
+*.seed
