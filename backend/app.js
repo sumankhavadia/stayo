@@ -4,6 +4,7 @@ if (process.env.NODE_ENV !== "production") {
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const cors = require('cors');
 const apiListingsRouter = require('./routes/apiListings.js');
 const apiAuthRouter = require('./routes/apiAuth.js');
 const ExpressError = require('./utils/ExpressError.js');
@@ -20,6 +21,22 @@ app.use(express.json());
 app.locals.currentUser = null;
 app.locals.success = [];
 app.locals.error = [];
+
+const frontendUrl = process.env.FRONTEND_URL;
+const allowedOrigins = [frontendUrl, 'http://localhost:5173'].filter(Boolean);
+
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 const dburl=process.env.MONGO_URL;
 
@@ -63,13 +80,20 @@ if (process.env.NODE_ENV === 'production' && dburl) {
 const sessionConfig = {
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true,        
+  saveUninitialized: false,
     cookie: {
         httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // 1 week
-        maxAge: 1000 * 60 * 60 * 24 * 7
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    sameSite: 'lax'
     }
 };
+
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+  sessionConfig.cookie.sameSite = 'none';
+  sessionConfig.cookie.secure = true;
+}
 
 if (store) {
   sessionConfig.store = store;
