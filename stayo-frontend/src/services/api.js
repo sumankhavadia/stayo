@@ -13,17 +13,35 @@ export default async function api(path, options = {}) {
     ...options,
   })
 
+  const contentType = response.headers.get('content-type') || ''
+  const isJson = contentType.includes('application/json')
+
   if (!response.ok) {
     let message = `Request failed: ${response.status}`
-    try {
-      const errData = await response.json()
-      if (errData?.message) message = errData.message
-    } catch {
-      // Keep fallback error message when response isn't JSON
+    if (isJson) {
+      try {
+        const errData = await response.json()
+        if (errData?.message) message = errData.message
+      } catch {
+        // Keep fallback error message when response isn't valid JSON
+      }
+    } else {
+      try {
+        const text = await response.text()
+        if (text && text.toLowerCase().includes('<!doctype')) {
+          message = 'Received HTML instead of JSON. Check VITE_API_URL and backend deployment URL.'
+        }
+      } catch {
+        // Keep fallback error message
+      }
     }
     throw new Error(message)
   }
 
   if (response.status === 204) return null
+  if (!isJson) {
+    throw new Error('Expected JSON response but received non-JSON content.')
+  }
+
   return response.json()
 }
